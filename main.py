@@ -48,7 +48,7 @@ pygame.display.set_caption("2D Physics Engine")
 
 Scene = Scene(
     [ ],
-    GRAVITY
+    GRAVITY,
 )
 
 Scene.add(
@@ -61,11 +61,20 @@ Scene.add(
         is_breakable=True,
         break_impulse=100000
         ),
+    Rectangle(
+        x=200,
+        y=500,
+        width=60,
+        height=50,
+        mass=100,
+        is_breakable=False,
+        ignore_gravity=True
+        ),
     Circle(
         x=WIDTH / 2 + 200,
         y=300,
-        radius=25,
-        mass=120,
+        radius=50,
+        mass=300,
         ),
 
     Rectangle(
@@ -108,9 +117,9 @@ Scene.add(
 )
 
 polygon_1 = Polygon(
-        x=310,
+        x=400,
         y=250,
-        vertices=[(0, 0), (50, 0), (50, 25), (0, 50)],
+        vertices=[(0, 0), (50, 0), (50, 25), (25, 100), (0, 50)],
         mass=100
     )
 polygon_1.rotate(90, in_radians=False)
@@ -131,18 +140,6 @@ cursor = Circle(
 Scene.add(cursor)
 
 cursor.teleport(cartesian_coord_from_pygame(pygame.mouse.get_pos()))
-
-player = Rectangle(
-    x=450,
-    y=250,
-    width=25,
-    height=25,
-    name="Player",
-    color=COLORS["red"],
-    mass=50,
-)
-
-Scene.add(player)
 
 
 ######################### 로프 생성 로직 ##########################
@@ -285,48 +282,11 @@ dt = 1 / FPS
 
 # Main game loop
 while True:
-    # 방향키 입력 등 이벤트 처리
+    # 이벤트 처리
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             pygame.quit()
             sys.exit()
-        elif event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_LEFT:
-                move_left = True
-            elif event.key == pygame.K_RIGHT:
-                move_right = True
-            elif event.key == pygame.K_UP:
-                move_up = True
-            elif event.key == pygame.K_DOWN:
-                move_down = True
-        elif event.type == pygame.KEYUP:
-            if event.key == pygame.K_LEFT:
-                move_left = False
-            elif event.key == pygame.K_RIGHT:
-                move_right = False
-            elif event.key == pygame.K_UP:
-                move_up = False
-            elif event.key == pygame.K_DOWN:
-                move_down = False
-        elif event.type == pygame.MOUSEBUTTONDOWN:
-            mouse_x, mouse_y = pygame.mouse.get_pos()
-
-            new_rect = Rectangle(
-                x=mouse_x,
-                y=HEIGHT - mouse_y,
-                width=20,
-                height=20
-            )
-            Scene.add(new_rect)
-
-    if move_left:
-        player.velocity[0] -= PLAYER_SPEED_X
-    if move_right:
-        player.velocity[0] += PLAYER_SPEED_X
-    if move_up:
-        player.velocity[1] += PLAYER_SPEED_Y
-    if move_down:
-        player.velocity[1] -= PLAYER_SPEED_Y
 
     # 커서 방향으로 강체를 이동시킴
     mouse_x, mouse_y = pygame.mouse.get_pos()
