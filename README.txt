@@ -6,5 +6,3 @@ GitHub 레포지토리 링크:
 https://github.com/Leon-iii/Pygame-Physics-Engine
 
 Practice #5에서 배포된 코드를 재사용했음을 밝힙니다.
-
-main.py에서 실행하시면 pygame 윈도우가 제대로 출력될 것입니다.

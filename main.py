@@ -139,7 +139,7 @@ cursor = Circle(
 
 Scene.add(cursor)
 
-cursor.teleport(cartesian_coord_from_pygame(pygame.mouse.get_pos()))
+cursor.teleport(Vector2D(WIDTH/2, HEIGHT/2))
 
 
 ######################### 로프 생성 로직 ##########################
